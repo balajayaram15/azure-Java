@@ -19,7 +19,7 @@ pool:
 steps:
 - task: katalonTask@0
   inputs:
-    version: '7.0.0'
+    version: 'Katalon_Studio_Windows_64-7.6.1'
     executeArgs: '-browserType="Chrome" -retry=0 -statusDelay=15 -testSuitePath="Test Suites/Regression Tests/All tests"'
 - task: Maven@3
   inputs:
