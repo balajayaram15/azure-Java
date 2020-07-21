@@ -1,24 +1,20 @@
-# Maven
-
-# Build your Java project and run tests with Apache Maven.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/java
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
 
 trigger:
 - master
 
 pool:
-
-  inputs:
-    script: |
-      echo Write your commands here
-      
-      echo Hello world
-  vmImage: 'ubuntu-latest'
+  vmImage: 'ubuntu-16.04'
 
 steps:
-- task: katalonTask@0
+- script: docker pull katalonstudio/katalon
+  displayName: 'Pull katalon studio images'
+- script: docker run -t --rm -v "$(pwd)":/katalon/katalon/source katalonstudio/katalon katalon-execute.sh -browserType="Chrome" -retry=0 -statusDelay=15 -testSuitePath="Test Suites/TS_RegressionTest"
+  displayName: 'Runnning Katalon TS_RegressionTest'
+- task: PublishPipelineArtifact@0
   inputs:
-    version: '7.6.1'
-    executeArgs: '-browserType="Chrome" -retry=0 -statusDelay=15 -testSuitePath="Test Suites/Regression Tests/All tests"'
-
+    artifactName: 'JUnit Report' 
+    targetPath: report/
