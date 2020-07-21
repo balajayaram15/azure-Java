@@ -1,4 +1,5 @@
 # Maven
+
 # Build your Java project and run tests with Apache Maven.
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
@@ -16,6 +17,10 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+- task: katalonTask@0
+  inputs:
+    version: '7.0.0'
+    executeArgs: '-browserType="Chrome" -retry=0 -statusDelay=15 -testSuitePath="Test Suites/Regression Tests/All tests"'
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
